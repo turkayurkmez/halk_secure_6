@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <iframe src="https://www.hepsiburada.com.tr" style="width: 80%; height: 80%;">
+
+    </iframe>
+    <button id="btnGetir">Ürünleri Getir</button>
+    <ul id="products">
+
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#btnGetir').on('click',function(){
+
+                let token = localStorage.getItem('token');
+
+                $.ajax({
+                    url:'https://localhost:7065/WeatherForecast',                  
+                    headers:{
+                        Authorization : 'Bearer ' + token
+                    },
+                    success:function(data){
+                        console.log('başarılı');
+                        console.log(data);
+                    },
+                    error: function(err){
+                        console.log('başarısız');
+
+                        console.log(err.responseText);
+                        
+                    }
+                })
+            })
+        });
+    </script>
+
+</body>
+</html>

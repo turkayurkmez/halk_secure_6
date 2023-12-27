@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" name="userName" placeholder="Kullanıcı adı" id="textUserName"><br>
+    <input type="password" name="password" placeholder="Şifre" id="textPassword">
+    <button id="login">Giriş yap</button>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#login').on('click',function(){
+
+
+                let name = $('#textUserName').val();
+                let pass = $('#textPassword').val();
+
+                var postObject = {
+                    'userName': name,
+                    'password': pass
+                }
+
+                 let pastData = JSON.stringify(postObject);
+                 console.log(JSON.stringify(postObject));
+
+                $.ajax({
+                    url:'https://localhost:7065/api/accounts',
+                    method:'POST',
+                    
+                    contentType:'application/json',                
+                    data: pastData,                  
+                    type:'POST',                    
+                    success:function(data){
+                        console.log('gelen token: ', data);
+                        localStorage.setItem('token',data.token);
+                    }
+
+                })
+                // $.post('https://localhost:7065/api/accounts',pastData,function(data){
+                //     console.log('OK',data);
+                // }, );
+
+            });
+        })
+    </script> 
+</body>
+</html>

@@ -19,17 +19,20 @@ namespace AuthFlowWithREST.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin,editor")]
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var response = Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
-            .ToArray();
+            .ToList();
+
+            return Ok(response);
+
         }
     }
 }
